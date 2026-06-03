@@ -54,8 +54,11 @@ impl BlockedFilter {
     fn locate(&self, key: u64) -> (usize, u8) {
         let h = mix(key);
         let bucket = ((h >> 32) as usize) % self.n_buckets;
-        // low byte, forced nonzero (0 reserved for empty slot).
-        let fp = ((h & 0xFF) as u8) | 1;
+        // low byte mapped to 1..=255 (255 distinct fingerprints; 0 == empty slot).
+        // Mapping 0 -> 255 keeps a full ~1/255 collision rate (does NOT waste a bit
+        // the way `| 1` would, which would collapse to 128 values).
+        let b = (h & 0xFF) as u8;
+        let fp = if b == 0 { 0xFF } else { b };
         (bucket, fp)
     }
 
