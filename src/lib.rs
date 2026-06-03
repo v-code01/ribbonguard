@@ -15,6 +15,9 @@
 
 use std::collections::HashSet;
 
+pub mod adaptive;
+pub use adaptive::AdaptiveFilter;
+
 /// Slots per bucket. 16 one-byte fingerprints == exactly one NEON `uint8x16`.
 pub const SLOTS: usize = 16;
 
