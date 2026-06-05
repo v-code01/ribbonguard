@@ -16,6 +16,10 @@
 use std::collections::HashSet;
 
 pub mod adaptive;
+/// Self-contained data generators (file `src/gen.rs`; `gen` is a 2024 keyword,
+/// so the module is exposed as `generators`).
+#[path = "gen.rs"]
+pub mod generators;
 pub use adaptive::AdaptiveFilter;
 
 /// Slots per bucket. 16 one-byte fingerprints == exactly one NEON `uint8x16`.
