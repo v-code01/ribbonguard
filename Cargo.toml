@@ -20,5 +20,9 @@ name = "bench"
 path = "src/bin/bench.rs"
 
 [[bin]]
+name = "skew"
+path = "src/bin/skew.rs"
+
+[[bin]]
 name = "ribbonguard"
 path = "src/main.rs"
