@@ -1,0 +1,110 @@
+# Evidence manifest for README.md ( antivapor gate).
+# Every substantive number maps to a committed evidence file via an `evidence`
+# substring that grep finds in `files`. Evidence strings are the exact values in
+# the bench_results/ files and src/; the README may round them.
+
+# --- Finding 1: NEON blocked probe, throughput-for-space Pareto vs xorf ---
+
+[[claim]]
+text = "At ~1% FP (λ=2.5) the NEON blocked probe is 1.42x xorf BinaryFuse8 throughput."
+evidence = "1.42x"
+files = ["bench_results/spike.md"]
+
+[[claim]]
+text = "Baseline is xorf BinaryFuse8, ~9.04 bits/key, native FP 0.39%."
+evidence = "9.04"
+files = ["bench_results/spike.md"]
+
+[[claim]]
+text = "The ~1% operating point costs 51.2 bits/key (6.4 MiB), 5.7x xorf space."
+evidence = "51.2"
+files = ["bench_results/spike.md"]
+
+[[claim]]
+text = "Matched to xorf's 0.39% FP (λ=1.0) the NEON probe is 0.96x, a wash."
+evidence = "0.96x"
+files = ["bench_results/spike.md"]
+
+[[claim]]
+text = "Matching FP needs λ=1.0 = 128 bits/key = 16 MiB, exactly the M4 L2 size."
+evidence = "128.0"
+files = ["bench_results/spike.md"]
+
+[[claim]]
+text = "NEON probe measures ~866 M/s at the ~1% point vs xorf ~610 M/s."
+evidence = "866"
+files = ["bench_results/spike.md"]
+
+# --- Finding 2: adaptive skew collapse, honestly bounded ---
+
+[[claim]]
+text = "Hot-U skew (s=0.6) collapses sustained FP from ~1.12% to 0 (>11,237x, floor) at 0.012 bits/key."
+evidence = "11,237x"
+files = ["bench_results/skew.md"]
+
+[[claim]]
+text = "Hot-U skew (s=1.0) collapses sustained FP >11,553x at 0.012 bits/key."
+evidence = "11,553"
+files = ["bench_results/skew.md"]
+
+[[claim]]
+text = "The hot-regime guard cost is 0.012 bits/key (guard never exceeds ~93 entries)."
+evidence = "0.012"
+files = ["bench_results/skew.md"]
+
+[[claim]]
+text = "Broad-U high-skew (s=1.5) reaches >12,000x collapse (12085.2x) at 0.075 bits/key."
+evidence = "12085.2"
+files = ["bench_results/skew.md"]
+
+[[claim]]
+text = "Broad-U low-skew (s=0.6, cap=512) buys only 1.5x, a residual floor of ~0.82%."
+evidence = "0.82%"
+files = ["bench_results/skew.md"]
+
+[[claim]]
+text = "Deepest broad-U win costs up to 1.229 bits/key (s=0.6, cap=32768, 450.9x)."
+evidence = "1.229"
+files = ["bench_results/skew.md"]
+
+[[claim]]
+text = "High-skew broad-U wins cheap: cap=512 at 0.066 bits/key."
+evidence = "0.066"
+files = ["bench_results/skew.md"]
+
+[[claim]]
+text = "Adversarial all-distinct negatives yield 1.0x (no win), full base rate 0.9734%."
+evidence = "0.9734%"
+files = ["bench_results/skew.md"]
+
+[[claim]]
+text = "Adversarial regime costs 4.194 bits/key of dead overhead."
+evidence = "4.194"
+files = ["bench_results/skew.md"]
+
+[[claim]]
+text = "Adversarial guard is pure churn: 65,368 evictions, zero benefit."
+evidence = "65,368"
+files = ["bench_results/skew.md"]
+
+# --- Sacred invariant and NEON implementation (source) ---
+
+[[claim]]
+text = "The NEON probe is one contiguous 16-byte load via vld1q_u8."
+evidence = "vld1q_u8"
+files = ["src/lib.rs"]
+
+[[claim]]
+text = "The probe uses one vceqq_u8 16-way compare."
+evidence = "vceqq_u8"
+files = ["src/lib.rs"]
+
+[[claim]]
+text = "The guard suppresses only confirmed false positives via mark_false_positive."
+evidence = "mark_false_positive"
+files = ["src/adaptive.rs"]
+
+[[claim]]
+text = "A full bucket spills to a HashSet so it can never drop a key (no false negatives)."
+evidence = "HashSet"
+files = ["src/lib.rs"]
