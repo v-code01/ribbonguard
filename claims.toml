@@ -1,4 +1,4 @@
-# Evidence manifest for README.md ( antivapor gate).
+# Evidence manifest for README.md (anti-vapor evidence gate).
 # Every substantive number maps to a committed evidence file via an `evidence`
 # substring that grep finds in `files`. Evidence strings are the exact values in
 # the bench_results/ files and src/; the README may round them.
